@@ -93,32 +93,45 @@ const FindDoctors = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6 md:py-10">
         <Link to="/results" state={{ symptoms: "" }}>
-          <Button variant="ghost" size="sm" className="mb-6">
+          <Button variant="ghost" size="sm" className="mb-4 hover-scale">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Results
+            Back
           </Button>
         </Link>
 
-        <div className="max-w-4xl mx-auto space-y-6">
+        {/* Progress Indicator */}
+        <div className="max-w-3xl mx-auto mb-8">
+          <div className="flex items-center justify-between text-sm mb-2">
+            <span className="font-medium text-primary">Step 3 of 3</span>
+            <span className="text-muted-foreground">Find a doctor</span>
+          </div>
+          <div className="h-2 bg-muted rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-primary transition-all duration-300" style={{ width: '100%' }}></div>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
           {/* Header */}
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold text-foreground">Healthcare Providers Near You</h1>
-            <p className="text-muted-foreground">
+          <div className="text-center space-y-3">
+            <h1 className="text-3xl md:text-5xl font-bold text-foreground">
+              Doctors near you
+            </h1>
+            <p className="text-lg text-muted-foreground">
               {locationPermission === "granted" 
-                ? "Based on your current location" 
-                : "Showing general results (location access not available)"}
+                ? "📍 Based on your location" 
+                : "Showing nearby doctors"}
             </p>
           </div>
 
           {/* Location Permission Notice */}
           {locationPermission === "denied" && (
-            <Card className="p-4 bg-accent/50 border-primary/20">
+            <Card className="p-4 bg-accent/50 border-2 border-primary/20">
               <div className="flex items-start gap-3">
-                <Navigation className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <span className="text-xl flex-shrink-0">📍</span>
                 <p className="text-sm text-muted-foreground">
-                  Enable location access in your browser for more accurate results based on your current location.
+                  <strong className="text-foreground">Tip:</strong> Turn on location in your browser to see doctors closest to you!
                 </p>
               </div>
             </Card>
@@ -137,30 +150,33 @@ const FindDoctors = () => {
 
           {/* Doctors List */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Available Healthcare Providers</h2>
+            <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
+              👨‍⚕️ Available doctors ({doctors.length})
+            </h2>
             {doctors.map((doctor, index) => (
-              <Card key={index} className="p-6 hover:shadow-glow transition-all duration-300">
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">{doctor.name}</h3>
+              <Card key={index} className="p-5 md:p-6 hover:shadow-glow transition-all duration-300 animate-fade-in hover-scale" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-4 flex-wrap">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-semibold text-foreground mb-1">{doctor.name}</h3>
                       <p className="text-sm text-primary font-medium">{doctor.specialty}</p>
                     </div>
-                    <span className="text-sm text-muted-foreground whitespace-nowrap">
-                      {doctor.distance}
-                    </span>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary/10 rounded-full border-2 border-secondary/20 whitespace-nowrap">
+                      <MapPin className="w-3 h-3 text-secondary" />
+                      <span className="text-sm font-medium text-secondary">{doctor.distance}</span>
+                    </div>
                   </div>
 
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-start gap-2">
+                  <div className="space-y-2.5 text-sm">
+                    <div className="flex items-start gap-2.5 p-3 bg-muted/30 rounded-lg">
                       <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5 text-primary" />
-                      <span>{doctor.address}</span>
+                      <span className="text-muted-foreground">{doctor.address}</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5 p-3 bg-muted/30 rounded-lg">
                       <Phone className="w-4 h-4 flex-shrink-0 text-primary" />
                       <a 
                         href={`tel:${doctor.phone}`} 
-                        className="text-primary hover:underline"
+                        className="text-primary hover:underline font-medium"
                       >
                         {doctor.phone}
                       </a>
@@ -168,11 +184,11 @@ const FindDoctors = () => {
                   </div>
 
                   <div className="flex gap-3 pt-2">
-                    <Button variant="default" size="sm" className="flex-1">
-                      View on Map
+                    <Button variant="default" size="sm" className="flex-1 hover-scale">
+                      📍 View on Map
                     </Button>
-                    <Button variant="outline" size="sm" className="flex-1">
-                      Call Now
+                    <Button variant="secondary" size="sm" className="flex-1 hover-scale">
+                      📞 Call Now
                     </Button>
                   </div>
                 </div>
@@ -181,13 +197,27 @@ const FindDoctors = () => {
           </div>
 
           {/* Info Card */}
-          <Card className="p-6 bg-accent/50">
-            <h3 className="font-semibold text-foreground mb-2">Before Your Appointment</h3>
-            <ul className="space-y-1 text-sm text-muted-foreground">
-              <li>• Prepare a list of your symptoms and when they started</li>
-              <li>• Bring any current medications you're taking</li>
-              <li>• Have your insurance information ready</li>
-              <li>• Write down any questions you want to ask</li>
+          <Card className="p-5 md:p-6 bg-accent/50 border-2 border-secondary/20">
+            <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+              📋 Before your visit
+            </h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-secondary font-bold">✓</span>
+                <span>Write down your symptoms and when they started</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-secondary font-bold">✓</span>
+                <span>Bring your current medications</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-secondary font-bold">✓</span>
+                <span>Have your insurance card ready</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-secondary font-bold">✓</span>
+                <span>List any questions you want to ask</span>
+              </li>
             </ul>
           </Card>
         </div>

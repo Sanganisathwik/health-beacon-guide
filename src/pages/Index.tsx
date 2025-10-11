@@ -1,95 +1,76 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Activity, Shield, MapPin, Heart } from "lucide-react";
+import { MessageSquare, ArrowRight, Sparkles } from "lucide-react";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Hero Section */}
-      <header className="container mx-auto px-4 pt-20 pb-12">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent rounded-full mb-4">
-            <Heart className="w-4 h-4 text-secondary" />
-            <span className="text-sm font-medium text-accent-foreground">Your Health Companion</span>
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in">
+          {/* Logo/Icon */}
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-3xl shadow-glow mb-4 animate-scale-in">
+            <Sparkles className="w-10 h-10 text-white" />
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
-            Welcome to <span className="text-primary">AURA</span>
-            <br />
-            Health Assistant
-          </h1>
-          
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A gentle, intelligent companion to help you understand your symptoms and find the right care.
-          </p>
+          <div className="space-y-4">
+            <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight">
+              How are you<br />feeling today?
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+              Tell us what's bothering you, and we'll help you understand it better.
+            </p>
+          </div>
 
-          {/* Safety Disclaimer */}
-          <Card className="max-w-2xl mx-auto p-6 bg-accent/50 border-secondary/20">
-            <div className="flex items-start gap-3">
-              <Shield className="w-6 h-6 text-secondary flex-shrink-0 mt-1" />
-              <div className="text-left space-y-2">
-                <h3 className="font-semibold text-accent-foreground">Important Safety Notice</h3>
-                <p className="text-sm text-muted-foreground">
-                  AURA provides educational health information only. It is <strong>not</strong> a substitute 
-                  for professional medical advice, diagnosis, or treatment. Always consult a qualified 
-                  healthcare provider for medical concerns.
-                </p>
-              </div>
-            </div>
-          </Card>
-
-          <div className="pt-6">
+          {/* Main CTA */}
+          <div className="pt-4">
             <Link to="/symptom-checker">
-              <Button variant="hero" size="lg" className="shadow-glow">
-                Start Symptom Check
+              <Button variant="hero" size="lg" className="text-lg px-10 py-6 h-auto hover-scale">
+                <MessageSquare className="w-5 h-5 mr-3" />
+                Talk to AURA
+                <ArrowRight className="w-5 h-5 ml-3" />
               </Button>
             </Link>
           </div>
+
+          {/* Quick Info */}
+          <div className="pt-8 max-w-md mx-auto">
+            <div className="bg-accent/30 rounded-2xl p-6 text-left space-y-3 border-2 border-secondary/20">
+              <p className="text-sm font-medium text-accent-foreground flex items-center gap-2">
+                <span className="text-2xl">💡</span> 
+                Quick & Simple
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-secondary font-bold">1.</span>
+                  <span>Describe how you feel in your own words</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-secondary font-bold">2.</span>
+                  <span>Get helpful information about possible causes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-secondary font-bold">3.</span>
+                  <span>Find doctors near you who can help</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Safety Note - Simplified */}
+          <div className="pt-8">
+            <p className="text-xs text-muted-foreground max-w-xl mx-auto">
+              💚 <strong>Important:</strong> AURA gives health information for learning. 
+              Always see a real doctor for medical advice.
+            </p>
+          </div>
         </div>
-      </header>
+      </div>
 
-      {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
-          <Card className="p-6 text-center space-y-4 hover:scale-105 transition-transform duration-300">
-            <div className="w-12 h-12 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <Activity className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="font-semibold text-lg">Smart Symptom Analysis</h3>
-            <p className="text-sm text-muted-foreground">
-              Describe your symptoms in plain language and receive AI-powered insights into possible conditions.
-            </p>
-          </Card>
-
-          <Card className="p-6 text-center space-y-4 hover:scale-105 transition-transform duration-300">
-            <div className="w-12 h-12 mx-auto bg-secondary rounded-xl flex items-center justify-center shadow-soft">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="font-semibold text-lg">Educational Information</h3>
-            <p className="text-sm text-muted-foreground">
-              Learn about treatment approaches and medication classes in clear, accessible language.
-            </p>
-          </Card>
-
-          <Card className="p-6 text-center space-y-4 hover:scale-105 transition-transform duration-300">
-            <div className="w-12 h-12 mx-auto bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <MapPin className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="font-semibold text-lg">Find Specialists</h3>
-            <p className="text-sm text-muted-foreground">
-              Locate nearby healthcare providers based on your symptoms and condition.
-            </p>
-          </Card>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="container mx-auto px-4 py-8 mt-16 border-t border-border">
-        <p className="text-center text-sm text-muted-foreground">
-          AURA Health Assistant • Built with care for your wellbeing
-        </p>
-      </footer>
+      {/* Bottom spacer */}
+      <div className="pb-16"></div>
     </div>
   );
 };

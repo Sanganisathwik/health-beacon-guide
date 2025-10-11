@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, AlertCircle, Pill, MapPin, Loader2 } from "lucide-react";
+import { ArrowLeft, AlertCircle, MapPin, Loader2, ArrowRight } from "lucide-react";
 
 interface Condition {
   name: string;
@@ -69,23 +69,47 @@ const Results = () => {
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case "mild":
-        return "text-secondary";
+        return "bg-secondary/10 text-secondary border-secondary/20";
       case "moderate":
-        return "text-primary";
+        return "bg-primary/10 text-primary border-primary/20";
       case "serious":
-        return "text-destructive";
+        return "bg-destructive/10 text-destructive border-destructive/20";
       default:
-        return "text-muted-foreground";
+        return "bg-muted text-muted-foreground border-border";
+    }
+  };
+
+  const getSeverityEmoji = (severity: string) => {
+    switch (severity) {
+      case "mild":
+        return "😌";
+      case "moderate":
+        return "🤔";
+      case "serious":
+        return "⚠️";
+      default:
+        return "ℹ️";
     }
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-hero flex items-center justify-center">
-        <Card className="p-8 text-center space-y-4">
-          <Loader2 className="w-12 h-12 text-primary animate-spin mx-auto" />
-          <h2 className="text-xl font-semibold">Analyzing Your Symptoms</h2>
-          <p className="text-muted-foreground">Please wait while we process your information...</p>
+      <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
+        <Card className="p-8 md:p-12 text-center space-y-6 max-w-md animate-scale-in">
+          <div className="relative">
+            <div className="w-20 h-20 mx-auto bg-gradient-primary rounded-full flex items-center justify-center animate-pulse">
+              <Loader2 className="w-10 h-10 text-white animate-spin" />
+            </div>
+          </div>
+          <div className="space-y-3">
+            <h2 className="text-2xl font-bold">Reading your symptoms...</h2>
+            <p className="text-muted-foreground">This will just take a moment ✨</p>
+          </div>
+          <div className="flex items-center justify-center gap-1">
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+          </div>
         </Card>
       </div>
     );
@@ -93,31 +117,41 @@ const Results = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6 md:py-10">
         <Link to="/symptom-checker">
-          <Button variant="ghost" size="sm" className="mb-6">
+          <Button variant="ghost" size="sm" className="mb-4 hover-scale">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            New Symptom Check
+            Start Over
           </Button>
         </Link>
 
-        <div className="max-w-4xl mx-auto space-y-6">
+        {/* Progress Indicator */}
+        <div className="max-w-3xl mx-auto mb-8">
+          <div className="flex items-center justify-between text-sm mb-2">
+            <span className="font-medium text-primary">Step 2 of 3</span>
+            <span className="text-muted-foreground">Understanding your symptoms</span>
+          </div>
+          <div className="h-2 bg-muted rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-primary transition-all duration-300" style={{ width: '66%' }}></div>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
           {/* Header */}
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold text-foreground">Analysis Results</h1>
-            <p className="text-muted-foreground">Based on the symptoms you described</p>
+          <div className="text-center space-y-3">
+            <h1 className="text-3xl md:text-5xl font-bold text-foreground">Here's what we found</h1>
+            <p className="text-lg text-muted-foreground">Based on what you told us</p>
           </div>
 
-          {/* Safety Warning */}
-          <Card className="p-6 bg-accent/50 border-secondary/20">
+          {/* Safety Warning - Simpler */}
+          <Card className="p-5 bg-accent/50 border-2 border-secondary/20">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-6 h-6 text-secondary flex-shrink-0 mt-1" />
+              <span className="text-2xl flex-shrink-0">⚠️</span>
               <div className="space-y-1">
-                <h3 className="font-semibold text-accent-foreground">This is not a diagnosis</h3>
+                <h3 className="font-semibold text-accent-foreground">Important Reminder</h3>
                 <p className="text-sm text-muted-foreground">
-                  These are possible conditions based on your symptoms. Only a qualified healthcare 
-                  professional can provide an accurate diagnosis. If symptoms are severe or worsening, 
-                  seek immediate medical attention.
+                  This is information to help you learn, <strong>not a diagnosis</strong>. 
+                  Only a real doctor can tell you what's wrong. If you feel very sick, see a doctor right away!
                 </p>
               </div>
             </div>
@@ -125,67 +159,79 @@ const Results = () => {
 
           {/* Possible Conditions */}
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold text-foreground">Possible Conditions</h2>
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground flex items-center gap-2">
+              🔍 What it might be
+            </h2>
             {conditions.map((condition, index) => (
-              <Card key={index} className="p-6 space-y-3">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-lg font-semibold text-foreground">{condition.name}</h3>
-                  <span className={`text-sm font-medium ${getSeverityColor(condition.severity)} capitalize`}>
+              <Card key={index} className="p-5 md:p-6 space-y-4 hover:shadow-glow transition-all duration-300 animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
+                <div className="flex items-start justify-between gap-4 flex-wrap">
+                  <h3 className="text-lg font-semibold text-foreground flex-1">{condition.name}</h3>
+                  <span className={`text-xs font-medium px-3 py-1.5 rounded-full border-2 ${getSeverityColor(condition.severity)} capitalize flex items-center gap-1.5 whitespace-nowrap`}>
+                    <span>{getSeverityEmoji(condition.severity)}</span>
                     {condition.severity}
                   </span>
                 </div>
-                <p className="text-muted-foreground">{condition.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{condition.description}</p>
               </Card>
             ))}
           </div>
 
           {/* Treatment Information */}
           {medicationInfo && (
-            <Card className="p-6 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                  <Pill className="w-5 h-5 text-white" />
-                </div>
-                <h2 className="text-2xl font-semibold text-foreground">Treatment Information</h2>
-              </div>
+            <Card className="p-5 md:p-6 space-y-5">
+              <h2 className="text-xl md:text-2xl font-semibold text-foreground flex items-center gap-2">
+                💊 What can help
+              </h2>
 
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">General Approach</h4>
-                  <p className="text-muted-foreground">{medicationInfo.treatment_approach}</p>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Over-the-Counter Options</h4>
-                  <p className="text-muted-foreground">{medicationInfo.common_otc_classes}</p>
+              <div className="space-y-5">
+                <div className="p-4 bg-muted/30 rounded-xl">
+                  <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <span>🎯</span> General Advice
+                  </h4>
+                  <p className="text-muted-foreground leading-relaxed">{medicationInfo.treatment_approach}</p>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Prescription Medications</h4>
-                  <p className="text-muted-foreground">{medicationInfo.prescription_info}</p>
+                <div className="p-4 bg-secondary/5 rounded-xl border-2 border-secondary/20">
+                  <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <span>🏪</span> Things you can get without a prescription
+                  </h4>
+                  <p className="text-muted-foreground leading-relaxed">{medicationInfo.common_otc_classes}</p>
                 </div>
 
-                <div className="bg-accent/50 rounded-lg p-4 text-sm text-muted-foreground mt-4">
-                  <strong className="text-accent-foreground">Important:</strong> Always consult a doctor 
-                  or pharmacist before taking any medication, even over-the-counter options. They can 
-                  advise on proper dosage, potential interactions, and whether the medication is appropriate 
-                  for your specific situation.
+                <div className="p-4 bg-primary/5 rounded-xl border-2 border-primary/20">
+                  <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <span>📋</span> About prescription medicine
+                  </h4>
+                  <p className="text-muted-foreground leading-relaxed">{medicationInfo.prescription_info}</p>
+                </div>
+
+                <div className="bg-accent/50 rounded-xl p-4 text-sm text-muted-foreground border-2 border-secondary/20">
+                  <p className="flex items-start gap-2">
+                    <span className="text-lg flex-shrink-0">💡</span>
+                    <span><strong className="text-accent-foreground">Always ask first:</strong> Talk to a doctor 
+                    or pharmacist before taking ANY medicine. They'll make sure it's safe for you and tell you how much to take.</span>
+                  </p>
                 </div>
               </div>
             </Card>
           )}
 
           {/* Find Doctor CTA */}
-          <Card className="p-8 text-center space-y-4 bg-gradient-subtle">
-            <MapPin className="w-12 h-12 text-primary mx-auto" />
-            <h3 className="text-2xl font-semibold text-foreground">Ready to See a Specialist?</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Find qualified healthcare providers near you who can properly diagnose and treat your condition.
-            </p>
+          <Card className="p-6 md:p-10 text-center space-y-5 bg-gradient-primary shadow-glow animate-scale-in">
+            <div className="space-y-3">
+              <div className="text-5xl">👨‍⚕️</div>
+              <h3 className="text-2xl md:text-3xl font-bold text-white">
+                Ready to talk to a doctor?
+              </h3>
+              <p className="text-white/90 max-w-xl mx-auto text-lg">
+                We can help you find qualified doctors near you who can help with your symptoms.
+              </p>
+            </div>
             <Link to="/find-doctors" state={{ conditions }}>
-              <Button variant="hero" size="lg">
-                <MapPin className="w-4 h-4 mr-2" />
-                Find Doctors Nearby
+              <Button variant="secondary" size="lg" className="text-base px-8 hover-scale">
+                <MapPin className="w-5 h-5 mr-2" />
+                Find Doctors Near Me
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </Card>
