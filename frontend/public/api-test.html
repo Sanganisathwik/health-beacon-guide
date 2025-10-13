@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Health Beacon API Integration Test</h1>
+        
+        <div class="test-section">
+            <h3>1. Test Symptom Analysis API</h3>
+            <button onclick="testSymptomAnalysis()">Test Symptom Analysis</button>
+            <div id="symptom-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. Test Nearby Doctors API</h3>
+            <button onclick="testNearbyDoctors()">Test Nearby Doctors</button>
+            <div id="doctors-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. Test Medications API</h3>
+            <button onclick="testMedications()">Test Medications</button>
+            <div id="medications-result"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+        
+        async function testSymptomAnalysis() {
+            const resultDiv = document.getElementById('symptom-result');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/symptoms/analyze`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symptoms: [
+                            { name: 'headache', severity: 'moderate' },
+                            { name: 'fever', severity: 'mild' }
+                        ],
+                        patientInfo: { age: 30 }
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <h4>✅ Symptom Analysis API Working!</h4>
+                        <p><strong>Risk Level:</strong> ${data.data?.analysis?.riskLevel || 'N/A'}</p>
+                        <p><strong>Conditions Found:</strong> ${data.data?.analysis?.possibleConditions?.length || 0}</p>
+                        <p><strong>Source:</strong> ${data.data?.analysis?.source || 'N/A'}</p>
+                        <details>
+                            <summary>Raw Response</summary>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Symptom Analysis API Failed</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function testNearbyDoctors() {
+            const resultDiv = document.getElementById('doctors-result');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/doctors/nearby`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        latitude: 40.7128,
+                        longitude: -74.0060,
+                        radius_km: 5,
+                        limit: 5
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <h4>✅ Nearby Doctors API Working!</h4>
+                        <p><strong>Doctors Found:</strong> ${data.total || 0}</p>
+                        <p><strong>Center:</strong> ${data.center?.latitude}, ${data.center?.longitude}</p>
+                        <details>
+                            <summary>Raw Response</summary>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Nearby Doctors API Failed</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function testMedications() {
+            const resultDiv = document.getElementById('medications-result');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/symptoms/medications`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symptoms: ['headache', 'fever'],
+                        severity: 'moderate'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        <h4>✅ Medications API Working!</h4>
+                        <p><strong>Medications Found:</strong> ${data.data?.medications?.length || 0}</p>
+                        <p><strong>Source:</strong> ${data.data?.source || 'N/A'}</p>
+                        <details>
+                            <summary>Raw Response</summary>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Medications API Failed</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Auto-test on page load
+        window.onload = function() {
+            console.log('Starting API tests...');
+            setTimeout(testSymptomAnalysis, 500);
+            setTimeout(testNearbyDoctors, 1000);
+            setTimeout(testMedications, 1500);
+        };
+    </script>
+</body>
+</html>

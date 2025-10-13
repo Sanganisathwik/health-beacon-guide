@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 215 25% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 20%;
+
+    /* Medical trust blue */
+    --primary: 210 80% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 210 80% 70%;
+    --primary-glow: 210 80% 85%;
+
+    /* Healing green accent */
+    --secondary: 145 65% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-light: 145 55% 65%;
+
+    --muted: 210 30% 94%;
+    --muted-foreground: 215 15% 50%;
+
+    --accent: 145 55% 92%;
+    --accent-foreground: 145 65% 25%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 25% 88%;
+    --input: 210 25% 90%;
+    --ring: 210 80% 56%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(210 80% 56%), hsl(210 80% 70%));
+    --gradient-hero: linear-gradient(180deg, hsl(210 40% 98%), hsl(210 60% 96%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 30% 97%));
+
+    /* Shadows */
+    --shadow-soft: 0 2px 8px hsl(210 30% 70% / 0.12);
+    --shadow-card: 0 4px 16px hsl(210 30% 60% / 0.1);
+    --shadow-glow: 0 0 24px hsl(210 80% 70% / 0.15);
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 215 30% 12%;
+    --foreground: 210 30% 95%;
+
+    --card: 215 28% 16%;
+    --card-foreground: 210 30% 95%;
+
+    --popover: 215 28% 16%;
+    --popover-foreground: 210 30% 95%;
+
+    --primary: 210 80% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 210 75% 65%;
+    --primary-glow: 210 70% 75%;
+
+    --secondary: 145 60% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-light: 145 55% 60%;
+
+    --muted: 215 25% 20%;
+    --muted-foreground: 215 15% 60%;
+
+    --accent: 145 45% 20%;
+    --accent-foreground: 145 55% 85%;
+
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 25% 24%;
+    --input: 215 25% 22%;
+    --ring: 210 80% 60%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(210 80% 50%), hsl(210 75% 60%));
+    --gradient-hero: linear-gradient(180deg, hsl(215 30% 12%), hsl(215 28% 14%));
+    --gradient-subtle: linear-gradient(180deg, hsl(215 28% 16%), hsl(215 25% 18%));
+
+    --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 4px 16px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 24px hsl(210 80% 50% / 0.2);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow;
+  }
+  
+  .interactive-card {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.7s ease-out forwards;
+  }
+}
+
+/* Floating orb animations */
+@keyframes float-1 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(1.1) rotate(180deg); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(0.9) rotate(-180deg); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(1.15) rotate(90deg); }
+}
+
+@keyframes float-4 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(0.85) rotate(-90deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px hsl(210 80% 70% / 0.3); }
+  50% { box-shadow: 0 0 30px hsl(210 80% 70% / 0.5), 0 0 40px hsl(145 65% 65% / 0.3); }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.02); }
+}
+
+@keyframes pulse-medium {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes pulse-strong {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Animation utility classes */
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+.animate-pulse-medium {
+  animation: pulse-medium 2.5s ease-in-out infinite;
+}
+
+.animate-pulse-strong {
+  animation: pulse-strong 3s ease-in-out infinite;
+}
+
+.animation-delay-75 {
+  animation-delay: 0.75s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes subtleGlow {
+  0%, 100% { box-shadow: 0 0 20px hsl(210 80% 70% / 0.1); }
+  50% { box-shadow: 0 0 30px hsl(210 80% 70% / 0.2); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Enhanced utility classes */
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.animate-subtle-glow {
+  animation: subtleGlow 3s ease-in-out infinite;
+}
+
+.group:hover .group-hover\\:scale-110 {
+  transform: scale(1.1);
+}
+
+.group:hover .group-hover\\:translate-x-1 {
+  transform: translateX(0.25rem);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom shadow effects */
+.shadow-glow-primary {
+  box-shadow: 0 0 30px hsl(210 80% 70% / 0.3);
+}
+
+.shadow-glow-secondary {
+  box-shadow: 0 0 25px hsl(145 65% 65% / 0.25);
+}

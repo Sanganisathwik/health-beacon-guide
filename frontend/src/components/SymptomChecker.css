@@ -1,0 +1,498 @@
+/* SymptomChecker Component Styles */
+.symptom-checker {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.container h1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin: 0;
+  padding: 30px;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+/* Server Status */
+.server-status {
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+}
+
+.server-status.online {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.server-status.offline {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.server-status.online .status-indicator {
+  background-color: #28a745;
+  animation: pulse 2s infinite;
+}
+
+.server-status.offline .status-indicator {
+  background-color: #dc3545;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Form Section */
+.form-section {
+  padding: 30px;
+}
+
+.form-section h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+/* Symptoms Container */
+.symptoms-container {
+  margin-bottom: 30px;
+}
+
+.symptom-input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.symptom-input {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.symptom-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.remove-btn {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: #ff3742;
+}
+
+.add-symptom-btn {
+  background: #2ed573;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.add-symptom-btn:hover {
+  background: #26de81;
+}
+
+/* Patient Information */
+.patient-info {
+  margin-bottom: 30px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+}
+
+.patient-info h3 {
+  margin-bottom: 20px;
+  color: #495057;
+  font-size: 1.3rem;
+}
+
+.patient-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.patient-input {
+  padding: 12px;
+  border: 2px solid #e1e1e1;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.patient-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.primary-btn, .secondary-btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.primary-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.primary-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.secondary-btn {
+  background: #17a2b8;
+  color: white;
+}
+
+.secondary-btn:hover:not(:disabled) {
+  background: #138496;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+}
+
+.secondary-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  margin: 20px 30px;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+}
+
+.error-message h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+}
+
+/* Results Section */
+.results-section {
+  background: #f8f9fa;
+  padding: 30px;
+  margin: 20px 30px;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+}
+
+.results-section h2 {
+  color: #495057;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+.analysis-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.result-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-card h4 {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 1rem;
+}
+
+.result-card p {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+/* Risk Level Colors */
+.risk-low {
+  color: #28a745 !important;
+}
+
+.risk-moderate {
+  color: #ffc107 !important;
+}
+
+.risk-high {
+  color: #dc3545 !important;
+}
+
+.risk-emergency {
+  color: #6f42c1 !important;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.5; }
+}
+
+/* Conditions Section */
+.conditions-section {
+  margin-bottom: 30px;
+}
+
+.conditions-section h3 {
+  color: #495057;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.condition-item {
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.condition-item h4 {
+  margin: 0 0 10px 0;
+  color: #212529;
+  font-size: 1.2rem;
+}
+
+.probability {
+  font-weight: 600;
+  color: #6c757d;
+  margin: 5px 0;
+}
+
+.description {
+  color: #6c757d;
+  margin: 10px 0 0 0;
+  line-height: 1.5;
+}
+
+/* Recommendations Section */
+.recommendations-section {
+  margin-bottom: 30px;
+}
+
+.recommendations-section h3 {
+  color: #495057;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.recommendations-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommendation-item {
+  background: white;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-left: 4px solid #17a2b8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  line-height: 1.5;
+}
+
+/* Specialist Section */
+.specialist-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.specialist-section h3 {
+  margin: 0 0 15px 0;
+  color: #212529;
+  font-size: 1.3rem;
+}
+
+.urgency-normal {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.urgency-urgent {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+.urgency-emergency {
+  color: #dc3545;
+  font-weight: 600;
+  animation: blink 1s infinite;
+}
+
+/* Doctors Section */
+.doctors-section {
+  background: #e8f4f8;
+  padding: 30px;
+  margin: 20px 30px;
+  border-radius: 10px;
+  border: 1px solid #bee5eb;
+}
+
+.doctors-section h2 {
+  color: #0c5460;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+.doctors-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.doctor-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #bee5eb;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctor-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.doctor-card h4 {
+  margin: 0 0 15px 0;
+  color: #0c5460;
+  font-size: 1.3rem;
+}
+
+.doctor-card p {
+  margin: 8px 0;
+  color: #495057;
+  line-height: 1.4;
+}
+
+/* Disclaimer */
+.disclaimer {
+  background: #fff3cd;
+  color: #856404;
+  padding: 20px 30px;
+  border-top: 1px solid #ffeaa7;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.disclaimer strong {
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container h1 {
+    font-size: 2rem;
+    padding: 20px;
+  }
+  
+  .form-section {
+    padding: 20px;
+  }
+  
+  .patient-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .primary-btn, .secondary-btn {
+    min-width: 100%;
+  }
+  
+  .analysis-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .doctors-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .results-section, .doctors-section {
+    margin: 20px 15px;
+    padding: 20px;
+  }
+}
