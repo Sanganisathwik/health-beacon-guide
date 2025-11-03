@@ -8,7 +8,7 @@ dist
 .gitignore
 README.md
 vite.config.ts
-tsconfig*.json
+tsconfig.json
 eslint.config.js
 postcss.config.js
 tailwind.config.ts

@@ -1,0 +1,13 @@
+[build]
+builder = "nix"
+buildCommand = "bash build.sh"
+
+[deploy]
+startCommand = "bash start.sh"
+restartPolicy = "always"
+healthcheckPath = "/api/health"
+healthcheckInterval = 30
+healthcheckTimeout = 10
+
+[env]
+PORT = "3000"
