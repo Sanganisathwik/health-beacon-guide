@@ -1,8 +1,0 @@
-{
-  "build": {
-    "buildCommand": "bash build.sh"
-  },
-  "deploy": {
-    "startCommand": "bash start.sh"
-  }
-}
