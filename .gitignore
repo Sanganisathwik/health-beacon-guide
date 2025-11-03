@@ -1,4 +1,21 @@
-# Logs
+# ============================================
+# ENVIRONMENT & SECRETS (NEVER COMMIT THESE)
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+.env.test
+*.key
+*.pem
+*.crt
+ssl/
+certificates/
+
+# ============================================
+# LOGS
+# ============================================
 logs
 *.log
 npm-debug.log*
@@ -7,18 +24,65 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# ============================================
+# DEPENDENCIES & BUILD OUTPUT
+# ============================================
 node_modules
 dist
 dist-ssr
 *.local
+build/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.venv
+venv/
 
-# Editor directories and files
+# ============================================
+# EDITOR & IDE
+# ============================================
 .vscode/*
 !.vscode/extensions.json
 .idea
+*.swp
+*.swo
+*.swc
+*.sw?
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.iml
+
+# ============================================
+# TESTING & COVERAGE
+# ============================================
+.pytest_cache/
+htmlcov/
+coverage/
+.coverage
+.nyc_output/
+
+# ============================================
+# OS FILES
+# ============================================
+.DS_Store
+Thumbs.db
+
+# ============================================
+# DATABASE
+# ============================================
+*.db
+*.sqlite
+*.sqlite3
+mongo_data/
+
+# ============================================
+# DEPLOYMENT
+# ============================================
+.vercel
+dist
+build
