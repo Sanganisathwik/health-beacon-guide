@@ -1,19 +1,8 @@
 {
-  "version": "1.0",
   "build": {
-    "builder": "nix",
-    "buildCommand": "bash build.sh",
-    "buildpacks": [
-      {
-        "id": "nixpacks.python"
-      },
-      {
-        "id": "nixpacks.nodejs"
-      }
-    ]
+    "buildCommand": "bash build.sh"
   },
   "deploy": {
-    "startCommand": "bash start.sh",
-    "restartPolicy": "always"
+    "startCommand": "bash start.sh"
   }
 }
